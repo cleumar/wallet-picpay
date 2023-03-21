@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
-import { NotFoundError } from 'src/common/errors/types/NotFoundError'
-import { PrismaService } from 'src/prisma/prisma.service'
+import { NotFoundError } from '../../common/errors/types/NotFoundError'
+
+import { PrismaService } from '../../prisma/prisma.service'
 import { CreateClientDTO } from '../dto/create-clients.dto'
 import { FindClientDTO } from '../dto/find-clients.dto'
 import { ClientEntity } from '../entities/clients.entity'

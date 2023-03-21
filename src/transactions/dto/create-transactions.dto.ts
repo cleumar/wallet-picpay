@@ -7,8 +7,8 @@ import {
   Max,
   Min,
 } from 'class-validator'
-import { AttributeTypeEnum } from 'src/shared/enum/attribute-type.enum'
-import { DescriptionEnum } from 'src/shared/enum/description-enum'
+import { AttributeTypeEnum } from '../../shared/enum/attribute-type.enum'
+import { DescriptionEnum } from '../../shared/enum/description-enum'
 
 export class CreateTransactionDTO {
   @ApiProperty({ description: 'from sender' })

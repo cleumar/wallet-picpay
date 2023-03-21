@@ -10,7 +10,7 @@ export class AppController {
 
   @ApiOkResponse({ description: 'The found record' })
   @Get()
-  async check() {
-    return await this.appService.check()
+  check(): string {
+    return this.appService.check()
   }
 }

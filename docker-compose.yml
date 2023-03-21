@@ -1,0 +1,44 @@
+version: '3.7'
+services:
+  api:
+    container_name: api
+    restart: always
+    build: .
+    volumes:
+      - ./src:/app/src
+    ports:
+      - '3000:3000'
+    links:
+      - postgres
+
+    depends_on:
+      - postgres
+
+    command: npm run start:migrate:prod
+    env_file:
+      - .env.docker
+
+    networks:
+      - postgres
+
+  postgres:
+    image: postgres
+    restart: always
+    container_name: postgres
+    networks:
+      - postgres
+    volumes:
+      - postgres-data:/data
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: api
+      HOSTNAME: db
+volumes:
+  postgres-data:
+    driver: local
+networks:
+  postgres:
+    driver: bridge

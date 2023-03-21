@@ -1,5 +1,5 @@
 import { Client } from '@prisma/client'
-import { Decimal } from '@prisma/client/runtime'
+import { Decimal } from '@prisma/client/runtime/library'
 
 export class ClientEntity implements Client {
   id: number

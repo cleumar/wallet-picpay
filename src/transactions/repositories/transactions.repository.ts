@@ -1,11 +1,12 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
-import { BadRequest } from 'src/common/errors/types/BadRequest'
-import { NotFoundError } from 'src/common/errors/types/NotFoundError'
+import { BadRequest } from '../../common/errors/types/BadRequest'
+import { NotFoundError } from '../../common/errors/types/NotFoundError'
 
-import { PrismaService } from 'src/prisma/prisma.service'
-import { AttributeTypeEnum } from 'src/shared/enum/attribute-type.enum'
-import { DescriptionEnum } from 'src/shared/enum/description-enum'
+import { PrismaService } from '../../prisma/prisma.service'
+import { AttributeTypeEnum } from '../../shared/enum/attribute-type.enum'
+import { DescriptionEnum } from '../../shared/enum/description-enum'
 import { CreateTransactionDTO } from '../dto/create-transactions.dto'
 import { FindTransactionDTO } from '../dto/find-transactions.dto'
 
@@ -40,22 +41,21 @@ export class TransactionsRepository {
     }
 
     if (
-      createTransactionDTO.desc_transaction === DescriptionEnum.COMPRAS ||
-      (createTransactionDTO.desc_transaction === DescriptionEnum.SAQUES &&
-        createTransactionDTO.tp_transaction === AttributeTypeEnum.CREDITO)
-    ) {
+      createTransactionDTO.desc_transaction === DescriptionEnum.COMPRAS || createTransactionDTO.desc_transaction === DescriptionEnum.SAQUES ) 
+
+    if(createTransactionDTO.tp_transaction !== AttributeTypeEnum.DEBITO)
+    {
       throw new BadRequest(
-        'desc_transaction: COMPRAS or Saques the tp_transaction is: D',
+        'desc_transaction: Compras or Saques the tp_transaction is: D',
       )
     }
 
     if (
-      createTransactionDTO.desc_transaction === DescriptionEnum.DEPOSITO ||
-      createTransactionDTO.desc_transaction ===
-        DescriptionEnum.CANCELAMENTO ||
-      (createTransactionDTO.desc_transaction === DescriptionEnum.ESTORNO &&
-        createTransactionDTO.tp_transaction === AttributeTypeEnum.DEBITO)
-    ) {
+      createTransactionDTO.desc_transaction === DescriptionEnum.DEPOSITO ||      
+      createTransactionDTO.desc_transaction === DescriptionEnum.CANCELAMENTO ||
+      createTransactionDTO.desc_transaction === DescriptionEnum.ESTORNO ) 
+      
+    if(createTransactionDTO.tp_transaction !== AttributeTypeEnum.CREDITO){
       throw new BadRequest(
         'desc_transaction: DEPOSITO, CANCELAMENTO or ESTORNO the tp_transaction is: C',
       )
@@ -106,9 +106,10 @@ export class TransactionsRepository {
       },
     })
 
-    const balance = await this.prisma.transactions.aggregate({
+    const balanceDebit = await this.prisma.transactions.aggregate({
       where: {
         to,
+        tp_transaction: AttributeTypeEnum.DEBITO,
         createdAt: {
           gte: new Date(findTransactionDTO.dt_ini),
           lte: new Date(findTransactionDTO.dt_fim),
@@ -119,6 +120,28 @@ export class TransactionsRepository {
       },
     })
 
-    return { data, balance }
+    const balanceCredit = await this.prisma.transactions.aggregate({
+      where: {
+        to,
+        tp_transaction: AttributeTypeEnum.CREDITO,
+        createdAt: {
+          gte: new Date(findTransactionDTO.dt_ini),
+          lte: new Date(findTransactionDTO.dt_fim),
+        },
+      },
+      _sum: {
+        amount: true,
+      },
+    })
+
+ const balance =  +balanceDebit - +balanceCredit
+    return {
+      data,
+      balance: {
+        debit: balanceDebit,
+        credit: balanceCredit,
+        balance: balance
+      },
+    }
   }
 }

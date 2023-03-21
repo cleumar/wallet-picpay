@@ -24,11 +24,11 @@ export class TransactionsController {
     description: 'A record with this id_transaction already exists.',
   })
   @Post()
-  create(
+  async create(
     @Body()
     createTransactionDTO: CreateTransactionDTO,
   ) {
-    return this.transactionsService.create({
+    return await this.transactionsService.create({
       ...createTransactionDTO,
     })
   }
@@ -39,7 +39,7 @@ export class TransactionsController {
   })
   @ApiNotFoundResponse({ description: 'Client not found' })
   @Get('/')
-  findOne(@Query() findTransactionDTO: FindTransactionDTO) {
-    return this.transactionsService.findOne(findTransactionDTO)
+  async findOne(@Query() findTransactionDTO: FindTransactionDTO) {
+    return await this.transactionsService.findOne(findTransactionDTO)
   }
 }

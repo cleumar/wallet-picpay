@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Decimal } from '@prisma/client/runtime'
+import { Decimal } from '@prisma/client/runtime/library'
 import { IsNumber, Max, Min } from 'class-validator'
 
 export class FindClientDTO {
