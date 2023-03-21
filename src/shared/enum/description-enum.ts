@@ -1,0 +1,7 @@
+export enum DescriptionEnum {
+  DEPOSITO = 'DEPOSITO',
+  CANCELAMENTO = 'CANCELAMENTO',
+  ESTORNO = 'ESTORNO',
+  COMPRAS = 'COMPRAS',
+  SAQUES = 'SAQUES',
+}
