@@ -1,0 +1,40 @@
+{
+  "coveragePathIgnorePatterns": [
+    ".interface.ts",
+    ".dto.ts",
+    ".constants.ts",
+    "resources",
+    ".entity.ts",
+    ".enum.ts",
+    ".repository.ts",
+    ".config.js",
+    ".eslintrc.js",
+    "index.ts",
+    "provider.ts",
+    "app.ts"
+  ],
+  "moduleNameMapper": {
+    "@/tests/(.*)": "<rootDir>/tests/$1",
+    "@/(.*)": "<rootDir>/src/$1"
+  },
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "./",
+  "testRegex": ".*\\.spec\\.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "modulePathIgnorePatterns": ["migrations", "config"],
+  "testPathIgnorePatterns": ["dist"],
+  "collectCoverageFrom": ["src/**/*.{ts,js}"],
+  "coverageDirectory": "coverage",
+  "testEnvironment": "node",
+  "coverageThreshold": {
+    "global": {
+      "branches": 85,
+      "lines": 85,
+      "functions": 85,
+      "statements": 85
+    }
+  },
+  "testTimeout": 50000
+}
