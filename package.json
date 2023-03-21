@@ -51,8 +51,7 @@
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard-with-typescript": "^34.0.1",
-    "eslint-plugin-prettier": "^4.2.1",
-    
+    "eslint-plugin-prettier": "^4.2.1",    
     "eslint-plugin-diff": "^2.0.1",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jest": "^26.5.3",
@@ -74,6 +73,20 @@
   "engines": {
     "node": ">=16.x"
   },
+  "lint-staged": {
+    "*/**/*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm run typecheck",
+      "post-commit": "git update-index --again",
+      "pre-push": "npm run test:ci",
+      "commit-msg": "commitlint -e"
+    }
+  },
   "jest": {
     "moduleFileExtensions": [
       "js",
@@ -91,18 +104,4 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   },
-  "lint-staged": {
-    "*/**/*.{js,ts}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged && yarn typecheck",
-      "post-commit": "git update-index --again",
-      "pre-push": "npm run test:ci",
-      "commit-msg": "commitlint -e"
-    }
-  }
 }
