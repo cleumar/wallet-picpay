@@ -134,7 +134,7 @@ export class TransactionsRepository {
       },
     })
 
- const balance =  +balanceDebit._sum.amount - +balanceCredit._sum.amount
+ const balance =  +balanceCredit._sum.amount - +balanceDebit._sum.amount  
     return {
       data,
       balance: {
