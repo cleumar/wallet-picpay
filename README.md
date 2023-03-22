@@ -72,9 +72,10 @@ PORT=
  - na pasta raiz, executar os comandos abaixo
  ```bash
   1. $ npm install (instalar as dependencias)
-  2. $ npm run start:migrate:dev (caso se for a primeira vez: executar o comando para criar as tabelas na base de dados, caso ja tenha sido executado pular essa etapa)
-  3. $ npm start:dev (start da aplicacao)
-  4. $ apos o start da aplicação acessar a url: http://localhost:3003/docs/ (acesso a documentação da api)
+  2. $ startando o postgres: na raiz do projeto executar o comando: docker-compose up postgres
+  3. $ npm run start:migrate:dev (caso se for a primeira vez: executar o comando para criar as tabelas na base de dados, caso ja tenha sido executado pular essa etapa)
+  4. $ npm start:dev (start da aplicacao)
+  5. $ apos o start da aplicação acessar a url: http://localhost:3003/docs/ (acesso a documentação da api)
 ```
 
 
