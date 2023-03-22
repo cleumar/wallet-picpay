@@ -55,6 +55,7 @@ PORT=
 * # Container
 
 1. na raiz do projeto executar o comando: `docker-compose up -d --build`
+2. apos subir a aplicação acessar a url: http://localhost:3000/docs/ (acesso a documentação da api)
 
 
     ## Comandos importantes
