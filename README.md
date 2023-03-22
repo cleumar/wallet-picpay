@@ -121,15 +121,11 @@ $ npm run test:ci
 
 ```
 ## Arquitetura:
+  ![Arquitetura](https://user-images.githubusercontent.com/19482159/226821259-627f0cfb-7606-4879-bf2c-ea3db69050b7.png)
 
 
 
 
-
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
 
 ## License
