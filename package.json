@@ -16,6 +16,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:ci": "jest --coverage",
+    "start:migrate:dev": "npx prisma migrate dev && npx prisma generate && npm run start:dev",
     "start:migrate:prod": "npx prisma migrate deploy && npm run start:prod",
     "typecheck": "yarn tsc -noEmit"
   },
