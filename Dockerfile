@@ -1,4 +1,5 @@
-FROM node:16 AS builder
+FROM node:16-alpine
+
 
 # Create app directory
 WORKDIR /app
@@ -8,7 +9,7 @@ COPY package*.json ./
 COPY prisma ./prisma/
 
 # Install app dependencies
-RUN npm install
+RUN npm install -g @nestjs/cli
 
 COPY . .
 
@@ -16,10 +17,10 @@ RUN npm run build
 
 FROM node:16
 
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/prisma ./prisma
+COPY --from=0 /app/node_modules ./node_modules
+COPY --from=0 /app/package*.json ./
+COPY --from=0 /app/dist ./dist
+COPY --from=0 /app/prisma ./prisma
 
 EXPOSE 3000
 # 👇 new migrate and start app script

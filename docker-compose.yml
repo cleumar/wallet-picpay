@@ -1,44 +1,45 @@
 version: '3.7'
+
+# For connection urls to the following instances, see
+# https://github.com/prisma/prisma/blob/main/TESTING.md#environment-variables
 services:
-  api:
-    container_name: api
-    restart: always
-    build: .
-    volumes:
-      - ./src:/app/src
-    ports:
-      - '3000:3000'
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-wallet
     links:
       - postgres
-
+    networks:
+      - postgres_network
     depends_on:
       - postgres
-
-    command: npm run start:migrate:prod
+    ports:
+      - "3000:3000"
+    restart: always
     env_file:
       - .env.docker
 
-    networks:
-      - postgres
-
   postgres:
-    image: postgres
-    restart: always
+    image: postgres:latest
     container_name: postgres
-    networks:
-      - postgres
-    volumes:
-      - postgres-data:/data
+    hostname: postgres
     ports:
-      - '5432:5432'
+      - 5432:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: api
-      HOSTNAME: db
+      POSTGRES_DB: db_wallet
+    networks:
+      - postgres_network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: always
+
 volumes:
   postgres-data:
-    driver: local
 networks:
-  postgres:
+  postgres_network:
     driver: bridge
+
