@@ -61,7 +61,7 @@ export class TransactionsRepository {
       )
     }
 
-    if (createTransactionDTO.tp_transaction !== AttributeTypeEnum.DEBITO) {
+    if (createTransactionDTO.tp_transaction === AttributeTypeEnum.DEBITO) {
       await this.prisma.client.update({
         where: { cpf: to },
         data: {

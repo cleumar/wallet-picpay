@@ -1,4 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
+import { Transform } from 'class-transformer'
+
 import {
   IsEnum,
   IsNotEmpty,
@@ -7,6 +9,7 @@ import {
   Max,
   Min,
 } from 'class-validator'
+
 import { AttributeTypeEnum } from '../../shared/enum/attribute-type.enum'
 import { DescriptionEnum } from '../../shared/enum/description-enum'
 
@@ -25,12 +28,14 @@ export class CreateTransactionDTO {
   @IsString()
   @IsNotEmpty()
   @IsEnum(DescriptionEnum)
+  @Transform(param => param.value.toUpperCase())
   desc_transaction: string
 
   @ApiProperty({ description: 'type transaction' })
   @IsString()
   @IsNotEmpty()
   @IsEnum(AttributeTypeEnum)
+  @Transform(param => param.value.toUpperCase())
   tp_transaction: string
 
   @ApiProperty({ type: 'number', format: 'decimal' })
